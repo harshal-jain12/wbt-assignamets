@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Multiple Choice Quiz</h2>
+    <div id="quiz"></div>
+    <button id="submit">Submit</button>
+    <div id="score"></div>
+
+    <script>
+        let questions = [];
+        let score = 0;
+
+        function loadQuiz() {
+            $.get("https://opentdb.com/api.php?amount=5&type=multiple", function(data) {
+                questions = data.results;
+                displayQuestions();
+            });
+        }
+
+        function displayQuestions() {
+            $("#quiz").html("");
+            questions.forEach((question, index) => {
+                $("#quiz").append(`<p>${question.question}</p>`);
+                const options = [...question.incorrect_answers, question.correct_answer].sort(() => Math.random() - 0.5);
+                options.forEach(option => {
+                    $("#quiz").append(`<input type="radio" name="q${index}" value="${option}"> ${option}<br>`);
+                });
+            });
+        }
+
+        $("#submit").click(function() {
+            score = 0;
+            questions.forEach((question, index) => {
+                const selected = $(`input[name=q${index}]:checked`).val();
+                if (selected === question.correct_answer) score++;
+            });
+            $("#score").html(`<p>Your Score: ${score} / 5</p>`);
+        });
+
+        loadQuiz();
+    </script>
+</body>
+</html>

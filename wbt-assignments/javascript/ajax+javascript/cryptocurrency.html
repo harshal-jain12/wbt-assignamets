@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Price Tracker</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Cryptocurrency Price Tracker</h2>
+    <input type="text" id="cryptoName" placeholder="Enter cryptocurrency name">
+    <button id="fetchPrices">Fetch Prices</button>
+    <div id="prices"></div>
+
+    <script>
+        function fetchPrices() {
+            let cryptoName = $("#cryptoName").val().toLowerCase();
+            $.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr`, function(data) {
+                $("#prices").html("");
+                data.forEach(crypto => {
+                    if (crypto.name.toLowerCase().includes(cryptoName)) {
+                        $("#prices").append(`<p>${crypto.name} (${crypto.symbol}): ₹${crypto.current_price}</p>`);
+                    }
+                });
+            });
+        }
+
+        $("#fetchPrices").click(fetchPrices);
+    </script>
+</body>
+</html>

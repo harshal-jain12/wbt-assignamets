@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Calculation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Marks Calculator</h2>
+    <input type="number" id="marks1" placeholder="Enter marks for Subject 1">
+    <input type="number" id="marks2" placeholder="Enter marks for Subject 2">
+    <input type="number" id="marks3" placeholder="Enter marks for Subject 3">
+    <button id="calculate">Calculate Total & Average</button>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#calculate").click(function() {
+                let marks1 = parseInt($("#marks1").val());
+                let marks2 = parseInt($("#marks2").val());
+                let marks3 = parseInt($("#marks3").val());
+                let total = marks1 + marks2 + marks3;
+                let average = total / 3;
+
+                $("#result").html(`<p>Total Marks: ${total}</p><p>Average Marks: ${average}</p>`);
+            });
+        });
+    </script>
+</body>
+</html>
